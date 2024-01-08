@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaCalendarPlus, FaPlus } from 'react-icons/fa6'
-import TableCompTwo from '../Components/Tables/TableCompTwo'
+import TableCompTwo from '../../Components/Tables/TableCompTwo'
 import { Text } from '@tremor/react'
 
 const SalesInvoice = () => {

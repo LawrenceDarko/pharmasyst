@@ -20,10 +20,12 @@ import { LuBarChart3 } from "react-icons/lu";
 import { TfiBarChartAlt } from "react-icons/tfi";
 import { BsFileText } from "react-icons/bs";
 import { CiCircleList } from "react-icons/ci";
-import { RiDeleteBinLine } from "react-icons/ri";
+import { RiDeleteBinFill, RiDeleteBinLine, RiFileList2Fill, RiMedicineBottleFill } from "react-icons/ri";
 import { MdAddCircleOutline } from "react-icons/md";
 import { IoMdPersonAdd } from "react-icons/io";
 import { MdOutlinePeople } from "react-icons/md";
+import { TbRulerMeasure } from "react-icons/tb";
+import { FaCashRegister } from "react-icons/fa6";
 
 interface Route {
     icon: LucideIcon;
@@ -41,74 +43,82 @@ const superAdmin: Route[] = [
     {
         icon: GiMedicines,
         label: 'Sales',
-        // href: '/sales',
         submenu: [
-            { name: 'POS', href: '/pos-system', SubIcon: IoSettingsOutline },
-            { name: 'Sales Invoice', href: '/sales-invoice', SubIcon: TfiBarChartAlt },
-        ]
+            { name: 'POS', href: '/pos-system', SubIcon: FaCashRegister },
+            { name: 'Sales Invoice', href: '/sales-invoice', SubIcon: RiFileList2Fill },
+        ],
     },
     {
         icon: LuBox,
-        label: 'Drugs',
-        // href: '/searchh',
+        label: 'Medicine',
         submenu: [
-            { name: 'Drug List', href: '/scheduled', SubIcon: IoSettingsOutline },
-            { name: 'Stock Out List', href: '/scheduled', SubIcon: TfiBarChartAlt },
-            { name: 'Supplier List', href: '/scheduled', SubIcon: BsFileText },
-            { name: 'Category List', href: '/scheduled', SubIcon: CiCircleList },
-            { name: 'Order List', href: '/scheduled', SubIcon: CiCircleList },
-            { name: 'Drug Expiry Info', href: '/scheduled', SubIcon: RiDeleteBinLine },
-        ]
+            { name: 'Medicine List', href: '/medicine-list', SubIcon: RiMedicineBottleFill },
+            { name: 'Stock Out List', href: '/stock-out-list', SubIcon: RiFileList2Fill },
+            { name: 'Supplier List', href: '/supplier-list', SubIcon: LiaIdCard },
+            { name: 'Category List', href: '/category-list', SubIcon: RiDeleteBinFill },
+            { name: 'Order List', href: '/order-list', SubIcon: IoMdPersonAdd },
+            { name: 'Unit of Measurement', href: '/unit-of-measurement', SubIcon: MdOutlinePeople },
+            { name: 'Medicine Expiry Info', href: '/expiry-info', SubIcon: IoSettingsOutline },
+        ],
     },
     {
         icon: TbReportAnalytics,
         label: 'Reports',
-        href: '/users'
+        href: '/reports',
     },
     {
         icon: LuBarChart3,
         label: 'Stock',
-        href: '/users'
+        href: '/stock',
     },
     {
         icon: IoPeopleOutline,
         label: 'Customers',
-        href: '/users'
+        submenu: [
+            { name: 'Customer List', href: '/customer-list', SubIcon: MdAddCircleOutline },
+            { name: 'Customer Payments', href: '/customer-payments', SubIcon: IoMdPersonAdd },
+        ],
     },
     {
         icon: IoPersonOutline,
-        label: 'Manufacturer',
-        href: '/users'
+        label: 'Purchase',
+        // href: '/purchase',
+        submenu: [
+            { name: 'Purchase Bills', href: '/purchase-bills', SubIcon: RiDeleteBinFill },
+            { name: 'Expenses', href: '/expenses', SubIcon: IoSettingsOutline },
+            { name: 'Supplier Payment', href: '/supplier-payment', SubIcon: MdOutlinePeople },
+        ],
     },
     {
         icon: LiaIdCard,
-        label: 'Employee',
-        href: '/users',
+        label: 'Human Resource',
         submenu: [
-            { name: 'Add Employee Role', href: '/All', SubIcon: MdAddCircleOutline },
-            { name: 'Add Employee', href: '/scheduled', SubIcon: IoMdPersonAdd },
-            { name: 'Employee List', href: '/waiting', SubIcon: MdOutlinePeople },
-        ]
+            { name: 'Add Employee Role', href: '/add-employee-role', SubIcon: MdOutlinePeople },
+            { name: 'Add Employee', href: '/add-employee', SubIcon: IoMdPersonAdd },
+            { name: 'Employee List', href: '/employee-list', SubIcon: LiaIdCard },
+            { name: 'Attendance', href: '/attendance', SubIcon: MdOutlinePeople },
+            { name: 'Monthly Salary', href: '/monthly-salary', SubIcon: IoSettingsOutline },
+        ],
     },
     {
         icon: IoSettingsOutline,
         label: 'Settings',
-        href: '/users'
-    }
-]
+        href: '/settings',
+    },
+];
 
 const salesRoute: Route[] = [
     {
-        icon: List,
+        icon: Home,
         label: 'Courses',
-        href: '/teacher/courses'
+        href: '/teacher/courses',
     },
     {
-        icon: BarChart,
+        icon: TbReportAnalytics,
         label: 'Analytics',
-        href: '/teacher/analytics'
+        href: '/teacher/analytics',
     },
-]
+];
 
 
 
@@ -142,9 +152,9 @@ export const SidebarRoutes = () => {
 
     return (
         <div className="flex flex-col w-full">
-            {routes.map((route) => (
+            {routes.map((route, index) => (
                 <SidebarItem
-                    key={route.href}
+                    key={route.label}
                     icon={route.icon}
                     label={route.label}
                     href={route.href}

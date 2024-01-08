@@ -13,16 +13,15 @@ import {
     TableHeaderCell,
     TableBody,
     Badge,
-    DateRangePicker, 
-    DateRangePickerItem, 
     DateRangePickerValue,
     TextInput
     // Button,
 } from "@tremor/react";
 import { Search, SearchIcon } from "lucide-react";
 import { useState } from "react";
-import { FaCalendarPlus, FaPlus } from "react-icons/fa6";
-import { GrFormNext } from "react-icons/gr";
+import { FaPlus } from "react-icons/fa6";
+import useModalStore from "@/app/Context/useModalStore";
+import DateRangePickerComp from "../Inputs/DateRangePickerComp";
 
 //   const colors = {
 //     "Ready for dispatch": "gray",
@@ -102,14 +101,41 @@ const transactions = [
     amount: "$ 190.90",
     link: "#",
     },
+    {
+        transactionID: "#89012345",
+        user: "Sev Major",
+        item: "Oakley Jawbreaker",
+        status: "Ready for dispatch",
+        amount: "$ 190.90",
+        link: "#",
+    },
+    {
+        transactionID: "#89012345",
+        user: "Sev Major",
+        item: "Oakley Jawbreaker",
+        status: "Ready for dispatch",
+        amount: "$ 190.90",
+        link: "#",
+    },
+    {
+        transactionID: "#89012345",
+        user: "Sev Major",
+        item: "Oakley Jawbreaker",
+        status: "Ready for dispatch",
+        amount: "$ 190.90",
+        link: "#",
+        },
 ];
 
 export default function TableCompTwo() {
 
-    const itemsPerPage = 5;
+    const { onOpen } = useModalStore()
+
+    // const itemsPerPage = 5;
+    const [itemsPerPage, setItemsPerPage] = useState(10)
     const [currentPage, setCurrentPage] = useState(1);
 
-    const [value, setValue] = useState<DateRangePickerValue>({
+    const [date, setDate] = useState<DateRangePickerValue>({
         from: new Date(2023, 1, 1),
         to: new Date(),
     });
@@ -134,22 +160,17 @@ export default function TableCompTwo() {
                     <TextInput icon={SearchIcon} placeholder="Search..." />
                 </div>
 
-                <div className="w-full pr-4 lg:w-6/12 xl:w-1/4">
-                    <DateRangePicker
-                        className="max-w-md mx-auto"
-                        value={value}
-                        onValueChange={setValue}
-                        color="rose"
-                    />
+                <div className="w-full lg:w-6/12 xl:w-1/4">
+                    <DateRangePickerComp placeholder="Select Date" setDate={setDate} date={date}/>
                 </div>
                 
                 <div className="w-full lg:w-6/12 xl:w-1/5">
                     <TextInput icon={SearchIcon} placeholder="Invoice No..." />
                 </div>
-                <div className="w-full lg:w-6/12 xl:w-1/5">
-                    <button className="flex w-full items-center p-2 rounded text-white bg-[#1E293B]">
+                <div className="w-full  lg:w-6/12 xl:w-[100px]">
+                    <button onClick={onOpen} className="flex w-full justify-center items-center p-2 rounded text-white bg-[#1E293B]">
                         <FaPlus size={15} className="pr-1 font-bold"/>
-                        <p>New schedule</p>
+                        <p>Add</p>
                     </button>
                 </div>
                 {/* <Search /> */}
