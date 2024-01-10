@@ -34,9 +34,7 @@ const useFetch = <T extends any>(
     const [isError, setIsError] = useState<boolean>(false);
     const [isRefetching, setIsRefetching] = useState<boolean>(false);
 
-    const fetchData = async () => {
-        const cancelTokenSource = axios.CancelToken.source();
-    
+    const fetchData = async (cancelTokenSource?: CancelTokenSource) => {
         if (!data) {
             setIsLoading(true);
         } else {
@@ -49,7 +47,7 @@ const useFetch = <T extends any>(
                     'Content-Type': 'application/json',
                     ...options.headers,
                 },
-                cancelToken: cancelTokenSource.token,
+                cancelToken: cancelTokenSource?.token,
                 ...options,
             };
     
@@ -61,7 +59,7 @@ const useFetch = <T extends any>(
             });
     
             if (axiosResponse && axiosResponse.data) {
-                const responseData: T = axiosResponse.data;
+                const responseData: any = axiosResponse.data;
                 setData(responseData);
                 setIsSuccess(true);
             } else {
@@ -75,8 +73,8 @@ const useFetch = <T extends any>(
                 setIsError(true);
             }
         } finally {
-            if (!cancelTokenSource.token.reason) {
-                // Check if the request was not canceled
+            // Check if the request was not canceled
+            if (!cancelTokenSource?.token.reason) {
                 setIsLoading(false);
                 setIsRefetching(false);
             }
@@ -84,20 +82,24 @@ const useFetch = <T extends any>(
     };
     
     
-
-    useEffect(() => {
-        fetchData();
-
-        return () => {
-            setIsLoading(false);
-            setIsRefetching(false);
-        };
-    }, [apiEndpoint, method, requestData, options.headers]);
-
     const refetchData = () => {
         setIsSuccess(false);
+        setIsLoading(true);
         fetchData();
     };
+
+    useEffect(() => {
+        const cancelTokenSource = axios.CancelToken.source();
+    
+        fetchData(cancelTokenSource);
+    
+        return () => {
+            cancelTokenSource.cancel("Request canceled by cleanup");
+        };
+    }, [apiEndpoint, method, requestData, options.headers]);
+    
+
+
 
     const resetState = () => {
         setData(null);
