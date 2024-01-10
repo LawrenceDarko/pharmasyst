@@ -1,23 +1,23 @@
 // SidebarItem.tsx
+import React from "react";
 import { useGeneralContext } from "@/app/hooks/GeneralContext";
 import { cn } from "@/lib/utils";
 import { ListItem } from "@tremor/react";
 import { ChevronDown, LucideIcon } from "lucide-react";
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { IconType } from "react-icons";
 
 interface SidebarItemProps {
-icon: LucideIcon;
-label: string;
-href?: string | any;
-submenu?: { name: string; href: string, SubIcon?: IconType; }[];
+    icon: LucideIcon;
+    label: string;
+    href?: string | any;
+    submenu?: { name: string; href: string, SubIcon?: IconType; }[];
 }
 
 const SidebarItem: React.FC<SidebarItemProps> = ({ icon: Icon, label, href, submenu }) => {
-    const { submenuStates, setSubmenuState, openSubmenu, setOpenSubmenu } = useGeneralContext();
 
-    const isOpen = submenuStates[label] || false;
+    const [isSubmenuOpen, setSubmenuOpen] = useState(false);
 
     const pathname = usePathname();
     const router = useRouter();
@@ -26,22 +26,13 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ icon: Icon, label, href, subm
 
     const onClick = () => {
         if (href) {
-        setSubmenuState((prev: any) => ({ ...prev, [label]: false }));
-        setOpenSubmenu(null); // Close the open submenu when clicking a new link
-        router?.push(href);
+            router?.push(href);
         }
     };
     
+
     const toggleSubmenu = () => {
-        const newIsOpen = !isOpen;
-    
-        // Close the currently open submenu if it's not the current one
-        if (openSubmenu && openSubmenu !== label) {
-        setSubmenuState((prev: any) => ({ ...prev, [openSubmenu]: false }));
-        }
-    
-        setSubmenuState((prev: any) => ({ ...prev, [label]: newIsOpen }));
-        setOpenSubmenu(newIsOpen ? label : null);
+        setSubmenuOpen(!isSubmenuOpen);
     };
 
 
@@ -57,14 +48,14 @@ return (
         <Icon size={22} />
         <p onClick={onClick}>{label}</p>
         {submenu && (
-            <div className={`absolute right-4 transition-all ${isOpen ? 'rotate-180' : ''}`} onClick={toggleSubmenu}>
+            <div className={`absolute right-4 transition-all ${isSubmenuOpen ? 'rotate-180' : ''}`} onClick={toggleSubmenu}>
             <ChevronDown size={20} />
             </div>
         )}
         </div>
     </div>
     {submenu && (
-        <div className={`transition-all bg-blue-500 ease-in-out duration-700 ${isOpen ? 'max-h-full overflow-hidden' : 'max-h-0 overflow-hidden'}`}>
+        <div className={`transition-all bg-blue-500 ease-in-out duration-700 ${isSubmenuOpen ? 'max-h-full overflow-hidden' : 'max-h-0 overflow-hidden'}`}>
         {submenu.map(({ href, name, SubIcon }, index) => (
             <ListItem
             key={index}
@@ -82,7 +73,8 @@ return (
 );
 };
 
-export default SidebarItem;
+// export default SidebarItem;
+export default React.memo(SidebarItem)
 
 
 

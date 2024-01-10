@@ -39,7 +39,7 @@ const SalesInvoiceTable = () => {
         {}
     );
 
-    console.log('Data:', data);
+    // console.log('Data:', data);
 
     const columns = [
         { key: 'invoice_number', label: 'Invoice Number' },

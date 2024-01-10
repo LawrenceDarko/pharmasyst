@@ -38,7 +38,7 @@ const EmployeeTable = () => {
     const { data, isLoading, isSuccess, isError, isRefetching, refetchData } = useFetch<EmployeeInfo>(apiEndpoint, 'GET', null, {});
 
 
-    console.log("Data:", data)
+    // console.log("Data:", data)
 
     const columns = [
         { key: 'employee_name', label: 'Employee Name'},

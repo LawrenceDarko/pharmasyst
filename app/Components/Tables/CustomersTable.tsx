@@ -30,7 +30,7 @@ const CustomersTable = () => {
         {}
     );
 
-    console.log('Data:', data);
+    // console.log('Data:', data);
 
     const columns = [
         { key: 'customer_name', label: 'Customer Name' },

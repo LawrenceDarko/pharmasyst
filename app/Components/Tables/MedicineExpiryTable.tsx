@@ -21,7 +21,7 @@ const MedicineExpiryTable = () => {
         {}
     );
 
-    console.log('Data:', data);
+    // console.log('Data:', data);
 
     const columns = [
         { key: 'product', label: 'Product' },

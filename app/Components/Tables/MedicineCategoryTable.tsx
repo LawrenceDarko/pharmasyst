@@ -28,7 +28,7 @@ const MedicineCategoryTable = () => {
         {}
     );
 
-    console.log('Data:', data);
+    // console.log('Data:', data);
 
     const columns = [
         { key: 'category_name', label: 'Category Name' },

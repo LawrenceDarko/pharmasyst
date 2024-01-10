@@ -27,7 +27,7 @@ const EmployeeRoleTable = () => {
         {}
     );
 
-    console.log('Data:', data);
+    // console.log('Data:', data);
 
     const columns = [
         { key: 'role_name', label: 'Role Name' },

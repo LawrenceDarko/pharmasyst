@@ -32,7 +32,7 @@ const SupplierListTable = () => {
         {}
     );
 
-    console.log('Data:', data);
+    // console.log('Data:', data);
 
     const columns = [
         { key: 'supplier_name', label: 'Supplier Name' },

@@ -20,7 +20,7 @@ const MedicineTable = () => {
 
     const { data, isLoading, isError, refetchData, } = useFetch<MedicineInfo>(apiEndpoint,'GET',null,{});
 
-    console.log('Data:', data);
+    // console.log('Data:', data);
 
     const columns = [
         { key: 'medicine_name', label: 'Medicine Name' },

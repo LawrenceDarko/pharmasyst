@@ -27,7 +27,7 @@ const UnitMeasurementTable = () => {
         {}
     );
 
-    console.log('Data:', data);
+    // console.log('Data:', data);
 
     const columns = [
         { key: 'unit_name', label: 'Unit Name' },
