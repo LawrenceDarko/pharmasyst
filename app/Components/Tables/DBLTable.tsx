@@ -10,6 +10,7 @@ type TableColumn = {
   key: string;
   label: string;
   renderCell?: (cellData: any) => React.ReactNode;
+  width?: number | string;
 };
 
 type customStylingProp = {
@@ -20,6 +21,7 @@ type customStylingProp = {
   body?: React.CSSProperties; // Styles for the table body
   footer?: React.CSSProperties;
   stripeStyle?: React.CSSProperties;
+  tableCell?: React.CSSProperties;
 };
 
 type TableData = { [key: string]: any }[];
@@ -64,33 +66,32 @@ const DBLTable: React.FC<TableProps> = ({
   customStyles = {}
 }) => {
   // State for pagination
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
 
   const [sortColumn, setSortColumn] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
-
   const handleSort = (column: string) => {
-    // If the same column is clicked, toggle the sort order
     if (column === sortColumn) {
       setSortOrder((prevOrder) => (prevOrder === 'asc' ? 'desc' : 'asc'));
     } else {
-      // If a different column is clicked, set it as the new sorting column
       setSortColumn(column);
       setSortOrder('asc');
     }
   };
 
-  const searchedData = data ? data.filter((item: any) => {
+  // if (!Array.isArray(data)) {
+  //   throw new Error("Data must be an array");
+  // }
+
+  const searchedData = Array.isArray(data) ? data.filter((item: any) => {
     if (typeof item === 'object') {
-      // Check if any property includes the searchTerm
       return Object.values(item).some((value) =>
         typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    // If it's not an object, we cannot search through properties, so return false
     return false;
   }) : [];
 
@@ -109,15 +110,11 @@ const DBLTable: React.FC<TableProps> = ({
     }
   }) : [];
 
-  // Calculate pagination indexes
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedData = Array.isArray(sortedData) ? sortedData.slice(startIndex, endIndex) : [];
 
-  // const paginatedData = sortedData.slice(startIndex, endIndex);
-
-  // Calculate total pages
-  const totalPages = Math.ceil(data?.length / itemsPerPage);
+  const totalPages = Math.ceil((data?.length || 1) / itemsPerPage);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
@@ -125,22 +122,24 @@ const DBLTable: React.FC<TableProps> = ({
   };
 
   const handleSearchChange = (term: string) => {
-    onGlobalTableSearchChange ? onGlobalTableSearchChange(term) : setSearchTerm(term);;
-    setCurrentPage(1); // Reset current page when search term changes
+    onGlobalTableSearchChange ? onGlobalTableSearchChange(term) : setSearchTerm(term);
+    setCurrentPage(1);
   };
 
   const handleExportToExcel = () => {
-    // Implement your logic for exporting data to Excel here
-    // For simplicity, let's assume 'data' is an array of objects and 'columns' contains the keys
-    const csvContent = columns.map(column => column.label).join(',') + '\n';
-    const csvRows = data.map((row: any) => columns.map(column => row[column.key]).join(',')).join('\n');
-    const csvData = csvContent + csvRows;
+    try {
+      const csvContent = columns.map(column => column.label).join(',') + '\n';
+      const csvRows = data.map((row: any) => columns.map(column => row[column.key]).join(',')).join('\n');
+      const csvData = csvContent + csvRows;
 
-    const blob = new Blob([csvData], { type: 'text/csv' });
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    link.download = 'exported_data.csv';
-    link.click();
+      const blob = new Blob([csvData], { type: 'text/csv' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'exported_data.csv';
+      link.click();
+    } catch (error) {
+      console.error("Error exporting data to Excel:", error);
+    }
   };
 
 
@@ -181,19 +180,21 @@ const DBLTable: React.FC<TableProps> = ({
           )}
           {columns.map((column, colIndex) => (
             <td
-            key={colIndex}
-            className={`py-3 px-4 ${
-              enableStripStyle && colIndex === columns.length - 1
-                ? 'border-b'
-                : removeStraightLines
-                ? ''
-                : 'border-r'
-            } border-gray-100 ${!enableStripStyle && colIndex === columns.length - 1 ? 'border-b' : 'border-b'}`}
-          >
-            {column.renderCell
-              ? column.renderCell(row[column.key])
-              : row[column.key]
-            }
+              title={row[column.key]} 
+              key={colIndex}
+              className={`py-3 px-4 ${
+                enableStripStyle && colIndex === columns.length - 1
+                  ? 'border-b'
+                  : removeStraightLines
+                  ? ''
+                  : 'border-r'
+              } border-gray-100 ${!enableStripStyle && colIndex === columns.length - 1 ? 'border-b' : 'border-b'}`}
+              style={{...customStyles.tableCell, overflow: 'hidden', textOverflow: 'ellipsis'}}
+            >
+              {column.renderCell
+                ? column.renderCell(row[column.key])
+                : row[column.key]
+              }
           </td>
           ))}
           {showActions && (
@@ -216,7 +217,7 @@ const DBLTable: React.FC<TableProps> = ({
 
 
   return (
-    <div className={`rounded max-h-[700px] inter-light overflow-auto bg-white text-gray-500 shadow-lg p-6 w-full mx-auto mb-6 ${enableStripStyle ? 'striped' : ''}`} style={customStyles.component}>
+    <div className={`rounded max-h-auto inter-light overflow-auto bg-white text-gray-500 shadow-lg p-6 w-full mx-auto mb-6 ${enableStripStyle ? 'striped' : ''}`} style={customStyles.component}>
       <div className="flex items-center justify-between mb-4 bg-white">
         <h3 className="text-lg font-semibold text-gray-800">{tableTitle ? tableTitle : ''}</h3>
         <div className="flex items-center space-x-2">
@@ -245,8 +246,8 @@ const DBLTable: React.FC<TableProps> = ({
           />
         </div>
       </div>
-        <div style={customStyles.tableWrapper} className='max-h-[500px] overflow-auto my-custom-scrollbar2'>
-          <table className="w-full text-[15px] border-collapse" style={customStyles.table}>
+        <div style={customStyles.tableWrapper} className='max-h-[600px] overflow-auto my-custom-scrollbar2'>
+          <table className="w-full text-[15px] border-collapse" style={{...customStyles.table}}>
             <thead style={customStyles.header} className={`${!enableStripStyle && 'bg-gray-100'}`}>
               <tr>
               {onRowSelection &&  <th className="px-4 py-3 text-left border-t border-r border-gray-100">Select</th>}
@@ -255,6 +256,7 @@ const DBLTable: React.FC<TableProps> = ({
                   <th
                     key={index}
                     className={`${!enableStripStyle && 'bg-gray-100'} py-3 px-4 text-left border-r border-t border-gray-100`}
+                    style={{ minWidth: column.width, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
                     onClick={() => handleSort(column.key)}
                   >
                     {column.label}
@@ -307,7 +309,8 @@ const DBLTable: React.FC<TableProps> = ({
           </tbody>
 
           </table>
-          <div className="sticky bottom-0 flex items-center justify-between mt-4 bg-white">
+          </div>
+          <div className="sticky bottom-0 flex items-center justify-between w-full mt-4 bg-white">
             <div>
               <span className="mr-2">Items per page:</span>
               <select
@@ -350,7 +353,7 @@ const DBLTable: React.FC<TableProps> = ({
               )}
             </div>
           </div>
-        </div>
+        
     </div>
   );
 };
