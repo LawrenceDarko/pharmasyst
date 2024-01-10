@@ -5,7 +5,7 @@ import useModalStore from "@/app/Context/useModalStore";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 
-const SalesInvoiceModal = () => {
+const AddProductModal = () => {
     const {control, handleSubmit, formState:{errors}} = useForm<FieldValues>()
     const {isOpen, onClose} = useModalStore();
     const [selectedOption, setSelectedOption] = useState(''); // State to track selected option
@@ -31,4 +31,4 @@ const SalesInvoiceModal = () => {
     )
 }
 
-export default SalesInvoiceModal
+export default AddProductModal
