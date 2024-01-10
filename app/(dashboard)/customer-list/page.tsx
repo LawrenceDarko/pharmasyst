@@ -1,8 +1,11 @@
+import CustomersTable from '@/app/Components/Tables/CustomersTable'
 import React from 'react'
 
 const CustomerList = () => {
   return (
-    <div>CustomerList</div>
+    <div>
+      <CustomersTable />
+    </div>
   )
 }
 

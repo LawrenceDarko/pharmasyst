@@ -1,8 +1,11 @@
+import SupplierListTable from '@/app/Components/Tables/SupplierListTable'
 import React from 'react'
 
 const SupplierList = () => {
   return (
-    <div>SupplierList</div>
+    <div className='p-5'>
+      <SupplierListTable />
+    </div>
   )
 }
 

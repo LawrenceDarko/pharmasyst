@@ -1,6 +1,7 @@
 import Sidebar from '../Components/Navigations/sidebar'
 import { Navbar } from '../Components/Navigations/navbar'
 import SalesInvoiceModal from '../Components/Modal/SalesInvoiceModal'
+import AllModals from '../Components/AllModals'
 // import AllModals from '../Components/Modal/AllModals'
 
 
@@ -12,7 +13,7 @@ export default function DashboardLayout({
 }) {
     return (
         <div lang="en">
-        <SalesInvoiceModal />
+        <AllModals />
         <div className="h-full">
             <div className="h-[65px] md:pl-56 fixed inset-y-0 w-full z-20">
                 <Navbar />

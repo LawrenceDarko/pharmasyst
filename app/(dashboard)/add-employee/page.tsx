@@ -1,10 +1,10 @@
-import EmployeeComp from '@/app/Components/FormComponents/EmployeeComp'
+import EmployeeTable from '@/app/Components/Tables/EmployeeTable'
 import React from 'react'
 
 const AddEmployee = () => {
   return (
-    <div>
-      <EmployeeComp />
+    <div className='p-5'>
+      <EmployeeTable />
     </div>
   )
 }

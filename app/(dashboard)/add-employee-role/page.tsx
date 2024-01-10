@@ -1,8 +1,10 @@
-import React from 'react'
+import EmployeeRoleTable from "@/app/Components/Tables/EmployeeRoleTable"
 
 const AddEmployeeRole = () => {
   return (
-    <div>AddEmployeeRole</div>
+    <div className="p-5">
+      <EmployeeRoleTable />
+    </div>
   )
 }
 

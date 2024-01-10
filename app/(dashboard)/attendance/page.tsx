@@ -1,8 +1,11 @@
+import AttendanceTable from '@/app/Components/Tables/AttendanceTable'
 import React from 'react'
 
 const Attendance = () => {
   return (
-    <div>Attendance</div>
+    <div className='p-5'>
+      <AttendanceTable />
+    </div>
   )
 }
 

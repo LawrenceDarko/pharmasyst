@@ -1,8 +1,11 @@
+import MedicineTable from '@/app/Components/Tables/MedicineTable'
 import React from 'react'
 
 const MedicineList = () => {
   return (
-    <div>MedicineList</div>
+    <div className='p-5'>
+      <MedicineTable />
+    </div>
   )
 }
 
