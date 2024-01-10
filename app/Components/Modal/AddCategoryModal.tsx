@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import useAddEmployeeModalStore from "@/app/Context/useAddEmployeeModalStore";
 import BigModalTemplate from "./BigModalTemplate";
+import useAddCategoryModalStore from "@/app/Context/useAddCategoryModalStore";
 
 
-const AddEmployeeModal = () => {
+const AddCategoryModal = () => {
     const {control, handleSubmit, formState:{errors}} = useForm<FieldValues>()
-    const {isOpen, onClose} = useAddEmployeeModalStore();
+    const {isOpen, onClose} = useAddCategoryModalStore();
     const [selectedOption, setSelectedOption] = useState(''); // State to track selected option
 
     const handleOptionChange = (event: any) => {
@@ -28,8 +28,8 @@ const AddEmployeeModal = () => {
     )
 
     return (
-        <BigModalTemplate title="Add Employee" body={bodyContent} secondaryActionLabel={'Cancel'} secondaryAction={onClose} onSubmit={handleSubmit(onSubmit)} actionlabel={'Create'} isOpen={isOpen} onClose={onClose} />
+        <BigModalTemplate title="Add Category" body={bodyContent} secondaryActionLabel={'Cancel'} secondaryAction={onClose} onSubmit={handleSubmit(onSubmit)} actionlabel={'Create'} isOpen={isOpen} onClose={onClose} />
     )
 }
 
-export default AddEmployeeModal
+export default AddCategoryModal

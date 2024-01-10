@@ -1,13 +1,13 @@
 'use client'
 import React, { useState } from "react";
-import ModalTemplate from "./ModalTemplate"
-import useModalStore from "@/app/Context/useModalStore";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import useAddSupplierModalStore from "@/app/Context/useAddSupplierModalStore";
+import BigModalTemplate from "./BigModalTemplate";
 
 
 const AddSupplierModal = () => {
     const {control, handleSubmit, formState:{errors}} = useForm<FieldValues>()
-    const {isOpen, onClose} = useModalStore();
+    const {isOpen, onClose} = useAddSupplierModalStore();
     const [selectedOption, setSelectedOption] = useState(''); // State to track selected option
 
     const handleOptionChange = (event: any) => {
@@ -27,7 +27,7 @@ const AddSupplierModal = () => {
     )
 
     return (
-        <ModalTemplate title="Add Sales Invoice" body={bodyContent} secondaryActionLabel={'Cancel'} secondaryAction={onClose} onSubmit={handleSubmit(onSubmit)} actionlabel={'Create'} isOpen={isOpen} onClose={onClose} />
+        <BigModalTemplate title="Add Supplier" body={bodyContent} secondaryActionLabel={'Cancel'} secondaryAction={onClose} onSubmit={handleSubmit(onSubmit)} actionlabel={'Create'} isOpen={isOpen} onClose={onClose} />
     )
 }
 

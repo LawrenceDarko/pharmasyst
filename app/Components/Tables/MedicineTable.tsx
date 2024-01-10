@@ -6,7 +6,7 @@ import useFetch from '@/app/hooks/useFetchh';
 import { IoMdCreate, IoMdEye } from 'react-icons/io';
 import Link from 'next/link';
 import { IMedicineList } from '@/app/types/medicine.types';
-import useModalStore from '@/app/Context/useModalStore';
+import useAddProductModalStore from '@/app/Context/useAddProductModalStore';
 
 
 interface MedicineInfo {
@@ -15,7 +15,7 @@ interface MedicineInfo {
 }
 
 const MedicineTable = () => {
-    const { onOpen } = useModalStore()
+    // const { onOpen } = useAddProductModalStore()
     const apiEndpoint = `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/medicines`;
 
     const { data, isLoading, isError, refetchData, } = useFetch<MedicineInfo>(apiEndpoint,'GET',null,{});
@@ -43,8 +43,8 @@ const MedicineTable = () => {
     ];
 
     const toolbars: React.ReactNode[] = [
-        <button onClick={onOpen} key="newMedicine" className="px-3 py-1 text-white bg-[#0256D5] rounded">
-            <p>Add Medicine</p>
+        <button key="newMedicine" className="px-3 py-1 text-white bg-[#0256D5] rounded">
+            <Link href='/medicine-list/add-medicine'>Add Medicine</Link>
         </button>,
 
         <button onClick={refetchData} key="newMedicine" className="px-3 py-1 text-gray-500 bg-[#f1f1f1] rounded">

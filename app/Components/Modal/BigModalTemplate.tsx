@@ -52,10 +52,10 @@ const BigModalTemplate: React.FC<BigModalTemplateProps> = ({paddingTop, isOpen, 
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-100 outline-none no-scrollbar focus:outline-none backdrop-blur-sm bg-neutral-800/70">
-            <div className={`relative w-full h-full mx-auto my-6 transition md:w-4/6 lg:w-2/4 xl:w-[500px] lg:h-auto md:h-auto`}>
+            <div className={`relative w-full h-full mx-auto my-6 transition md:w-4/6 lg:w-2/4 xl:w-[80%] lg:h-auto md:h-auto`}>
                 <div className={`h-ful duration-300 ${showModal ? 'translate-y-0' : 'translate-y-full'} ${showModal ? 'opacity-100' : 'opacity-0'} translate`}>
-                    <div className='ptt-20'> {/* This adds padding below the modal*/}
-                        <div className={`relative flex flex-col w-full h-full bg-white border-0 shadow-lg outline-none translate lg:h-auto md:h-auto focus:outline-none`}>
+                    <div className='pt-20'> {/* This adds padding below the modal*/}
+                        <div className={`rounded-lg relative flex flex-col w-full h-full bg-white border-0 shadow-lg outline-none translate lg:h-auto md:h-auto focus:outline-none`}>
                             <div className='flex items-center justify-center p-6 rounded-t relative border-b-[1px]'>
                                 <button onClick={handleClose} className='absolute p-1 transition border-0 hover:opacity-70 right-9'>
                                     <IoMdClose size={18}/>
@@ -68,10 +68,10 @@ const BigModalTemplate: React.FC<BigModalTemplateProps> = ({paddingTop, isOpen, 
                                 {body}
                             </div>
                             <div className='flex flex-col gap-2 p-6'>
-                                <div className='flex flex-row items-center w-full gap-4'>
+                                {/* <div className='flex flex-row items-center w-full gap-4'>
                                     {secondaryAction && secondaryActionLabel && (<Button small label={secondaryActionLabel} onClick={handleSecondaryAction} outline/>)}
                                     {actionlabel && (<Button label={actionlabel} small onClick={handleSubmit}/>)}
-                                </div>
+                                </div> */}
                                 {/* footer */}
                             </div>
                         </div>
