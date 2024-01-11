@@ -26,6 +26,7 @@ import { IoMdPersonAdd } from "react-icons/io";
 import { MdOutlinePeople } from "react-icons/md";
 import { TbRulerMeasure } from "react-icons/tb";
 import { FaCashRegister } from "react-icons/fa6";
+import React from "react";
 
 interface Route {
     icon: LucideIcon;
@@ -94,7 +95,7 @@ const superAdmin: Route[] = [
         label: 'Human Resource',
         submenu: [
             { name: 'Add Employee Role', href: '/add-employee-role', SubIcon: MdOutlinePeople },
-            { name: 'Add Employee', href: '/add-employee', SubIcon: IoMdPersonAdd },
+            // { name: 'Add Employee', href: '/add-employee', SubIcon: IoMdPersonAdd },
             { name: 'Employee List', href: '/employee-list', SubIcon: LiaIdCard },
             { name: 'Attendance', href: '/attendance', SubIcon: MdOutlinePeople },
             { name: 'Monthly Salary', href: '/monthly-salary', SubIcon: IoSettingsOutline },
@@ -122,7 +123,7 @@ const salesRoute: Route[] = [
 
 
 
-export const SidebarRoutes = () => {
+const SidebarRoutes = () => {
 
     const determineUserRole = (): string => {
         const userRoles = ['Receptionist', 'Radiographer', 'Reporting Staff', 'Cashier'];
@@ -164,3 +165,6 @@ export const SidebarRoutes = () => {
         </div>
     )
 }
+
+// export default React.memo(SidebarRoutes)
+export default SidebarRoutes

@@ -30,6 +30,7 @@ type TableProps = {
   data: TableData | null | any;
   columns: TableColumn[];
   toolbars?: React.ReactNode[];
+  userComponents?: React.ReactNode;
   enableServerPagination?: boolean;
   onPaginationChange?: (pagination: { pageIndex: number; pageSize: number }) => void;
   onGlobalTableSearchChange?: (searchTerm: string) => void;
@@ -51,6 +52,7 @@ const DBLTable: React.FC<TableProps> = ({
   data,
   columns,
   toolbars,
+  userComponents,
   enableServerPagination = false,
   onPaginationChange,
   onGlobalTableSearchChange,
@@ -245,6 +247,9 @@ const DBLTable: React.FC<TableProps> = ({
             onChange={(e) => handleSearchChange(e.target.value)}
           />
         </div>
+      </div>
+      <div>
+          {userComponents}
       </div>
         <div style={customStyles.tableWrapper} className='max-h-[600px] overflow-auto my-custom-scrollbar2'>
           <table className="w-full text-[15px] border-collapse" style={{...customStyles.table}}>

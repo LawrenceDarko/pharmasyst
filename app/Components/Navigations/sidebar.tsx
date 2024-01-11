@@ -1,5 +1,7 @@
+import React from "react"
 import Logo from "./logo"
-import { SidebarRoutes } from "./sidebar-routes"
+import SidebarRoutes from "./sidebar-routes"
+// import { SidebarRoutes } from "./sidebar-routes"
 
 const Sidebar = () => {
     return (
@@ -15,4 +17,5 @@ const Sidebar = () => {
     )
 }
 
-export default Sidebar
+// export default Sidebar
+export default React.memo(Sidebar)

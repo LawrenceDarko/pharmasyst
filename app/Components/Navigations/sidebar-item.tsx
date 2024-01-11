@@ -1,5 +1,5 @@
 // SidebarItem.tsx
-import React from "react";
+import React, { useCallback } from "react";
 import { useGeneralContext } from "@/app/hooks/GeneralContext";
 import { cn } from "@/lib/utils";
 import { ListItem } from "@tremor/react";
@@ -7,6 +7,8 @@ import { ChevronDown, LucideIcon } from "lucide-react";
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { IconType } from "react-icons";
+import useStore from "@/app/store/store";
+
 
 interface SidebarItemProps {
     icon: LucideIcon;
@@ -16,6 +18,9 @@ interface SidebarItemProps {
 }
 
 const SidebarItem: React.FC<SidebarItemProps> = ({ icon: Icon, label, href, submenu }) => {
+
+    // const isSubmenuOpen = useStore((state: any) => state.isSubmenuOpen);
+    // const toggleSubmenu = useStore((state: any) => state.toggleSubmenu);
 
     const [isSubmenuOpen, setSubmenuOpen] = useState(false);
 
@@ -31,9 +36,12 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ icon: Icon, label, href, subm
     };
     
 
-    const toggleSubmenu = () => {
-        setSubmenuOpen(!isSubmenuOpen);
-    };
+    // const toggleSubmenu = () => {
+    //     setSubmenuOpen(!isSubmenuOpen);
+    // };
+    const toggleSubmenu = useCallback(() => {
+        setSubmenuOpen((prevIsSubmenuOpen) => !prevIsSubmenuOpen);
+    }, []);
 
 
 return (
@@ -73,8 +81,8 @@ return (
 );
 };
 
-// export default SidebarItem;
-export default React.memo(SidebarItem)
+export default SidebarItem;
+// export default React.memo(SidebarItem)
 
 
 

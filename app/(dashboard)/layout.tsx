@@ -21,7 +21,7 @@ export default function DashboardLayout({
             <div className="fixed inset-y-0 z-20 flex-col hidden w-56 h-full md:flex">
                 <Sidebar />
             </div>
-            <main className="h-full pt-[65px] md:pl-56">
+            <main className="h-screen pt-[65px] md:pl-56 bg-slate-100">
                 {children}
             </main>
         </div>

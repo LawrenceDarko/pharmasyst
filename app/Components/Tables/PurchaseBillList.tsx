@@ -15,7 +15,7 @@ interface MedicineInfo {
     data: IMedicineList[];
 }
 
-const MedicineTable = () => {
+const PurchaseBillList = () => {
     // const { onOpen } = useAddProductModalStore()
     const apiEndpoint = `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/medicines`;
 
@@ -109,7 +109,7 @@ const MedicineTable = () => {
                 columns={columns}
                 loading={isLoading}
                 isError={isError}
-                tableTitle="Medicine List"
+                tableTitle="Purchase Bill List"
                 printTools
                 toolbars={toolbars}
                 // userComponents={userComponent}
@@ -119,4 +119,4 @@ const MedicineTable = () => {
     );
 };
 
-export default MedicineTable;
+export default PurchaseBillList;
